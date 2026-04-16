@@ -200,3 +200,12 @@
   margin: 8px;
   border-radius: 8px;
 }
+.cta:hover {
+  background-color: var(--accent-border);
+}
+.correct {
+  color: green;
+}
+.incorrect {
+  color: red;
+}
