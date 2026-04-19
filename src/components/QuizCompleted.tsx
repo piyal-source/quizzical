@@ -24,8 +24,8 @@ export default function QuizCompleted({
         return (
           <div key={index}>
             <h3>{questions[index].question}</h3>
-            <p className={isCorrect ? "correct" : "incorrect"}>
-              {questions[index].options[answer]}
+            <p className={isCorrect ? "correct-text" : "incorrect-text"}>
+              {answer < 0 ? "No answer" : questions[index].options[answer]}
             </p>
           </div>
         );

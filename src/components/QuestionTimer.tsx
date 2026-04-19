@@ -24,7 +24,7 @@ export default function QuestionTimer({
 
   return (
     <div className="timer">
-      <progress value={timeOver} max={timeout}></progress>
+      <progress value={timeOver} max={timeout - 500}></progress>
     </div>
   );
 }

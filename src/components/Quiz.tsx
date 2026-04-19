@@ -3,6 +3,7 @@ import reactQuestions from "../data/reactQuestions";
 import QuestionTimer from "./QuestionTimer";
 import type { QuestionType } from "../types/QuestionType.type";
 import QuizCompleted from "./QuizCompleted";
+import Answers from "./Answers";
 
 function shuffle(arr: QuestionType[]) {
   const array = [...arr];
@@ -13,21 +14,23 @@ function shuffle(arr: QuestionType[]) {
   return array;
 }
 
-const questions = shuffle(reactQuestions);
+const questions = shuffle(reactQuestions.slice(-2));
 
 export default function Quiz() {
   const [userAnswers, setUserAnswers] = useState<number[]>([]);
 
-  const currentQuestion = userAnswers.length;
-  const completedQuiz = currentQuestion >= questions.length;
+  const currentQuestionIndex = userAnswers.length;
+  const completedQuiz = currentQuestionIndex >= questions.length;
 
-  const handleOptionClick = useCallback((index: number) => {
-    setUserAnswers((prev) => [...prev, index]);
-  }, []);
+  const handleOptionClick = (index: number) => {
+    setTimeout(() => {
+      setUserAnswers((prev) => [...prev, index]);
+    }, 500);
+  };
 
   const handleTimeOver = useCallback(() => {
-    handleOptionClick(-1);
-  }, [handleOptionClick]);
+    setUserAnswers((prev) => [...prev, -1]);
+  }, []);
 
   return (
     <main>
@@ -37,23 +40,16 @@ export default function Quiz() {
         <div className="quiz-container">
           <div className="card">
             <QuestionTimer
-              key={currentQuestion}
-              timeout={15000}
+              key={currentQuestionIndex}
+              timeout={5000}
               onTimeOver={handleTimeOver}
             />
-            <h2>{questions[currentQuestion].question}</h2>
-            <ol className="options-list">
-              {questions[currentQuestion].options.map((option, index) => (
-                <li key={option}>
-                  <button
-                    className="cta"
-                    onClick={() => handleOptionClick(index)}
-                  >
-                    {option}
-                  </button>
-                </li>
-              ))}
-            </ol>
+            <h2>{questions[currentQuestionIndex].question}</h2>
+            <Answers
+              key={questions[currentQuestionIndex].question}
+              question={questions[currentQuestionIndex]}
+              onOptionClick={handleOptionClick}
+            />
           </div>
         </div>
       )}
