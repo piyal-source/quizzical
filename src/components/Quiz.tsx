@@ -13,7 +13,7 @@ function shuffle(arr: QuestionType[]) {
   return array;
 }
 
-const questions = shuffle(reactQuestions.slice(-2));
+const questions = shuffle(reactQuestions);
 
 export default function Quiz() {
   const [userAnswers, setUserAnswers] = useState<number[]>([]);

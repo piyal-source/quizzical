@@ -16,7 +16,7 @@ export default function QuestionCard({
 
   return (
     <div className="card">
-      <QuestionTimer timeout={5000} onTimeOver={handleTimeOver} />
+      <QuestionTimer timeout={15000} onTimeOver={handleTimeOver} />
       <h2>{question.question}</h2>
       <Answers question={question} onOptionClick={onOptionClick} />
     </div>
