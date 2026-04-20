@@ -1,9 +1,8 @@
 import { useCallback, useState } from "react";
 import reactQuestions from "../data/reactQuestions";
-import QuestionTimer from "./QuestionTimer";
 import type { QuestionType } from "../types/QuestionType.type";
 import QuizCompleted from "./QuizCompleted";
-import Answers from "./Answers";
+import QuestionCard from "./QuestionCard";
 
 function shuffle(arr: QuestionType[]) {
   const array = [...arr];
@@ -22,14 +21,8 @@ export default function Quiz() {
   const currentQuestionIndex = userAnswers.length;
   const completedQuiz = currentQuestionIndex >= questions.length;
 
-  const handleOptionClick = (index: number) => {
-    setTimeout(() => {
-      setUserAnswers((prev) => [...prev, index]);
-    }, 500);
-  };
-
-  const handleTimeOver = useCallback(() => {
-    setUserAnswers((prev) => [...prev, -1]);
+  const handleOptionClick = useCallback((index: number) => {
+    setUserAnswers((prev) => [...prev, index]);
   }, []);
 
   return (
@@ -38,19 +31,11 @@ export default function Quiz() {
         <QuizCompleted userAnswers={userAnswers} questions={questions} />
       ) : (
         <div className="quiz-container">
-          <div className="card">
-            <QuestionTimer
-              key={currentQuestionIndex}
-              timeout={5000}
-              onTimeOver={handleTimeOver}
-            />
-            <h2>{questions[currentQuestionIndex].question}</h2>
-            <Answers
-              key={questions[currentQuestionIndex].question}
-              question={questions[currentQuestionIndex]}
-              onOptionClick={handleOptionClick}
-            />
-          </div>
+          <QuestionCard
+            key={questions[currentQuestionIndex].question}
+            question={questions[currentQuestionIndex]}
+            onOptionClick={handleOptionClick}
+          />
         </div>
       )}
     </main>

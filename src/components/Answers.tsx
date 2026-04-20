@@ -12,7 +12,9 @@ export default function Answers({
   const handleOptionClick = (index: number) => {
     if (selectedAnswer !== undefined) return;
     setSelectedAnswer(index);
-    onOptionClick(index);
+    setTimeout(() => {
+      onOptionClick(index);
+    }, 500);
   };
 
   const { options, correctAnswer } = question;
